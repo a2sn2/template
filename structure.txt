@@ -1,0 +1,87 @@
+Folder PATH listing for volume SharedPartition
+Volume serial number is 59BF-CABD
+D:.
+|   structure.txt
+|   
++---one
+|   |   index.html
+|   |   [Arabic] HTML And CSS Design 1 In 2022 in One Video_Full-HD.webm
+|   |   
+|   +---css
+|   |       all.min.css
+|   |       leon.css
+|   |       normalize.css
+|   |       
+|   +---images
+|   |       about.jpg
+|   |       landing.jpg
+|   |       logo.png
+|   |       portfolio-1.jpg
+|   |       portfolio-2.jpg
+|   |       portfolio-3.jpg
+|   |       services.jpg
+|   |       
+|   \---webfonts
+|           fa-brands-400.eot
+|           fa-brands-400.svg
+|           fa-brands-400.ttf
+|           fa-brands-400.woff
+|           fa-brands-400.woff2
+|           fa-regular-400.eot
+|           fa-regular-400.svg
+|           fa-regular-400.ttf
+|           fa-regular-400.woff
+|           fa-regular-400.woff2
+|           fa-solid-900.eot
+|           fa-solid-900.svg
+|           fa-solid-900.ttf
+|           fa-solid-900.woff
+|           fa-solid-900.woff2
+|           
+\---two
+    |   index.html
+    |   [Arabic] HTML And CSS Design 2 In 2022 in One Video_Full-HD.mp4
+    |   
+    +---css
+    |       all.min.css
+    |       kasper.css
+    |       normalize.css
+    |       
+    +---images
+    |       about.png
+    |       awesome-video.mp4
+    |       design-features.jpg
+    |       landing.jpg
+    |       logo.png
+    |       mobile.png
+    |       quote.jpg
+    |       shuffle-01.jpg
+    |       shuffle-02.jpg
+    |       shuffle-03.jpg
+    |       shuffle-04.jpg
+    |       shuffle-05.jpg
+    |       shuffle-06.jpg
+    |       shuffle-07.jpg
+    |       shuffle-08.jpg
+    |       skills-01.jpg
+    |       skills-02.jpg
+    |       stats.png
+    |       subscribe.jpg
+    |       
+    \---webfonts
+            fa-brands-400.eot
+            fa-brands-400.svg
+            fa-brands-400.ttf
+            fa-brands-400.woff
+            fa-brands-400.woff2
+            fa-regular-400.eot
+            fa-regular-400.svg
+            fa-regular-400.ttf
+            fa-regular-400.woff
+            fa-regular-400.woff2
+            fa-solid-900.eot
+            fa-solid-900.svg
+            fa-solid-900.ttf
+            fa-solid-900.woff
+            fa-solid-900.woff2
+            
