@@ -150,15 +150,44 @@
 
     footer{margin:40px 0 30px;color:var(--muted);font-size:.9rem;text-align:center}
     .heart{color:var(--accent)}
+
+    /* title shimmer */
+.type { position:relative; }
+.type::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+  transform:skewX(-20deg) translateX(-120%);
+  animation:shine 4s cubic-bezier(.2,.6,.3,1) infinite;
+  mix-blend-mode:overlay;
+}
+@keyframes shine{ to{ transform:skewX(-20deg) translateX(120%); } }
+
+/* keyboard hint */
+.hint{color:var(--muted); font-size:.9rem; margin-top:-6px}
+
+/* canvas stars behind the glow */
+.stars{position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.75}
+
+    
   </style>
+  
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%237c3aed"/><stop offset="1" stop-color="%2322d3ee"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="%230b0f17"/><path d="M18 42h28v4H18zM22 18h20a4 4 0 014 4v8a4 4 0 01-4 4H30l-8 6v-6h-0a4 4 0 01-4-4v-8a4 4 0 014-4z" fill="url(%23g)"/></svg>'>
+
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
 
+  <canvas id="stars" class="stars" aria-hidden="true"></canvas>
+
+
   <div class="container">
     <header>
       <span class="kicker">⚡ Live on GitHub Pages</span>
-      <h1>AI Templates Hub — <span class="type" id="typer">Creative</span></h1>
+      
+      <div class="hint">Shortcuts: <strong>1</strong> → One, <strong>2</strong> → Two, <strong>C</strong> → Copy selected URL</div>
+     
+      <h1>Templates Hub — <span class="type" id="typer">Creative</span></h1>
       <p class="sub">Two sleek templates with a neon, glassy vibe. Light, fast, and deploy-ready.</p>
     </header>
 
@@ -248,6 +277,70 @@
       });
     });
   </script>
+  
   <noscript>Enable JavaScript to see the animated header and tilt effects.</noscript>
+
+  <script>
+/* --- Stars Canvas --- */
+(function(){
+  const c = document.getElementById('stars');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, stars;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resize(){
+    w = c.width = Math.floor(innerWidth * DPR);
+    h = c.height = Math.floor(innerHeight * DPR);
+    c.style.width = innerWidth + 'px';
+    c.style.height = innerHeight + 'px';
+    const count = Math.floor((w*h)/ (18000 * DPR));
+    stars = Array.from({length: count}, ()=>({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      z: Math.random()*0.6 + 0.4,
+      vx: (Math.random()*0.4 - 0.2),
+      vy: (Math.random()*0.2 + 0.05)
+    }));
+  }
+  resize(); addEventListener('resize', resize);
+
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    for(const s of stars){
+      s.x += s.vx * s.z; s.y += s.vy * s.z;
+      if(s.x<0) s.x = w; if(s.x>w) s.x = 0;
+      if(s.y>h) { s.y = 0; s.x = Math.random()*w; }
+      const r = (1.2 + s.z*1.8) * DPR;
+      ctx.beginPath(); ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, r);
+      g.addColorStop(0, 'rgba(34,211,238,.9)');
+      g.addColorStop(1, 'rgba(124,58,237,.05)');
+      ctx.fillStyle = g; ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* --- Keyboard Shortcuts --- */
+(function(){
+  const goOne = ()=> window.open('./one/', '_blank', 'noopener');
+  const goTwo = ()=> window.open('./two/', '_blank', 'noopener');
+  const copy = (url)=> navigator.clipboard?.writeText(url).then(()=>{
+    // flash the footer as tiny feedback
+    const f = document.querySelector('footer'); if(!f) return;
+    const old = f.innerHTML; f.innerHTML = '✅ URL copied!'; setTimeout(()=>f.innerHTML = old, 1100);
+  });
+  addEventListener('keydown', (e)=>{
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if(e.key==='1') goOne();
+    if(e.key==='2') goTwo();
+    if(e.key.toLowerCase()==='c') copy('https://a2sn2.github.io/template/one/');
+  });
+})();
+</script>
+
+  
 </body>
 </html>
