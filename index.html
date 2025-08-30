@@ -1,36 +1,253 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>My Templates</title>
-    <style>
-      body{font-family:system-ui,arial,sans-serif;margin:2rem;line-height:1.6}
-      .grid{display:grid;gap:1rem;max-width:720px}
-      a.card{display:block;padding:1rem;border:1px solid #ddd;border-radius:8px;text-decoration:none}
-      a.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.1)}
-      small{color:#666}
-    </style>
-  </head>
-  <body>
-    <h1>Templates</h1>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Templates Hub</title>
+  <meta name="description" content="Two creative HTML/CSS templates deployed on GitHub Pages." />
 
-    <div class="grid">
-      <a class="card" href="./one/">
-        <strong>Template One (Leon)</strong><br>
-        <small>folder: /one/</small>
-      </a>
-      <a class="card" href="./two/">
-        <strong>Template Two (Kasper)</strong><br>
-        <small>folder: /two/</small>
-      </a>
-    </div>
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
-    <h2>Downloads (large media)</h2>
-    <ul>
-      <li><a href="https://github.com/a2sn2/template/releases/download/media-v1/intro-1.webm">intro-1.webm</a></li>
-      <li><a href="https://github.com/a2sn2/template/releases/download/media-v1/intro-2.mp4">intro-2.mp4</a></li>
-    </ul>
-    <p><small>Large files are hosted as GitHub Release assets.</small></p>
-  </body>
+  <style>
+    :root{
+      --bg-1:#0b0f17;
+      --bg-2:#111827;
+      --glass:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.15);
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --neon:#7c3aed;   /* purple */
+      --neon2:#22d3ee;  /* cyan   */
+      --accent:#10b981; /* green  */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% 10%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(1000px 700px at 90% 30%, rgba(34,211,238,.18), transparent 60%),
+        linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      overflow-x:hidden;
+    }
+
+    /* animated grid glow */
+    .glow{
+      position:fixed; inset:-20vmax;
+      background:
+        radial-gradient(closest-side at 20% 30%, rgba(124,58,237,.15), transparent 60%),
+        radial-gradient(closest-side at 80% 65%, rgba(34,211,238,.12), transparent 60%);
+      filter: blur(60px);
+      z-index:-1;
+      animation: drift 18s linear infinite alternate;
+      pointer-events:none;
+    }
+    @keyframes drift{
+      to { transform: translate3d(2rem,-1rem,0) scale(1.05); }
+    }
+
+    .container{max-width:1080px;margin:48px auto;padding:0 20px}
+
+    header{margin-bottom:28px}
+    .kicker{
+      display:inline-block;
+      padding:.25rem .6rem;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      backdrop-filter:saturate(140%) blur(6px);
+      background:var(--glass);
+      font-size:.85rem;
+      color:var(--muted);
+    }
+    h1{
+      margin:12px 0 8px;
+      font-size:clamp(28px,4vw,44px);
+      font-weight:800;
+      letter-spacing:.3px;
+      line-height:1.15;
+    }
+    .type{
+      color:transparent;
+      background:linear-gradient(90deg,var(--neon),var(--neon2));
+      -webkit-background-clip:text;
+              background-clip:text;
+      text-shadow:0 0 24px rgba(124,58,237,.25);
+    }
+    p.sub{margin:8px 0 24px;color:var(--muted)}
+
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    }
+
+    .card{
+      position:relative;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      overflow:hidden;
+      background:var(--glass);
+      backdrop-filter: blur(10px) saturate(130%);
+      min-height:220px;
+      transform-style:preserve-3d;
+      will-change:transform;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover{
+      border-color:rgba(255,255,255,.25);
+      box-shadow:0 18px 50px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.02) inset;
+    }
+
+    .bg{
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      filter: saturate(110%) contrast(105%) brightness(.9);
+      transform: translateZ(-10px) scale(1.12);
+    }
+    .overlay{
+      position:absolute; inset:0;
+      background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55));
+    }
+
+    .content{
+      position:relative; z-index:2; padding:18px;
+      display:flex; flex-direction:column; height:100%; justify-content:flex-end;
+    }
+    .title{font-weight:800;font-size:1.15rem}
+    .meta{color:var(--muted);font-size:.85rem;margin:.25rem 0 10px}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.6rem .9rem; border-radius:10px;
+      border:1px solid var(--stroke); text-decoration:none;
+      color:var(--text); background:rgba(255,255,255,.04);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.3)}
+    .btn.primary{
+      border-color:transparent;
+      background:linear-gradient(90deg,var(--neon),var(--neon2));
+      color:#0b0f17; font-weight:700;
+      text-shadow:none;
+    }
+
+    /* downloads */
+    .downloads{
+      margin:30px 0 10px;
+      border:1px dashed var(--stroke);
+      padding:14px;
+      border-radius:12px;
+      background:rgba(255,255,255,.03);
+    }
+    .downloads a{color:#c7d2fe}
+    .note{color:var(--muted);font-size:.9rem;margin-top:6px}
+
+    footer{margin:40px 0 30px;color:var(--muted);font-size:.9rem;text-align:center}
+    .heart{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="container">
+    <header>
+      <span class="kicker">⚡ Live on GitHub Pages</span>
+      <h1>AI Templates Hub — <span class="type" id="typer">Creative</span></h1>
+      <p class="sub">Two sleek templates with a neon, glassy vibe. Light, fast, and deploy-ready.</p>
+    </header>
+
+    <section class="grid">
+      <!-- Card 1 -->
+      <article class="card" data-tilt data-url="./one/">
+        <div class="bg" style="background-image:url('one/images/landing.jpg')"></div>
+        <div class="overlay"></div>
+        <div class="content">
+          <div class="title">Template One (Leon)</div>
+          <div class="meta">folder: /one/</div>
+          <div class="row">
+            <a class="btn primary" href="./one/">🚀 Launch</a>
+            <a class="btn" href="https://github.com/a2sn2/template/releases/download/media-v1/intro-1.webm" download>⬇️ Download video</a>
+            <button class="btn" data-copy="https://a2sn2.github.io/template/one/">🔗 Copy URL</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" data-tilt data-url="./two/">
+        <div class="bg" style="background-image:url('two/images/landing.jpg')"></div>
+        <div class="overlay"></div>
+        <div class="content">
+          <div class="title">Template Two (Kasper)</div>
+          <div class="meta">folder: /two/</div>
+          <div class="row">
+            <a class="btn primary" href="./two/">🚀 Launch</a>
+            <a class="btn" href="https://github.com/a2sn2/template/releases/download/media-v1/intro-2.mp4" download>⬇️ Download video</a>
+            <button class="btn" data-copy="https://a2sn2.github.io/template/two/">🔗 Copy URL</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="downloads">
+      <strong>Downloads (large media)</strong>
+      <ul>
+        <li><a href="https://github.com/a2sn2/template/releases/download/media-v1/intro-1.webm">intro-1.webm</a></li>
+        <li><a href="https://github.com/a2sn2/template/releases/download/media-v1/intro-2.mp4">intro-2.mp4</a></li>
+      </ul>
+      <div class="note">Large files are hosted as GitHub Release assets.</div>
+    </section>
+
+    <footer>
+      Built with <span class="heart">♥</span> by Mr. Eng — future-friendly, glitch-free.
+    </footer>
+  </div>
+
+  <script>
+    // Typewriter that cycles buzzwords
+    (function(){
+      const words = ["Creative","Artificial","Neon","Futuristic","Minimal"];
+      const el = document.getElementById("typer");
+      let i=0, j=0, deleting=false;
+      function tick(){
+        const word = words[i % words.length];
+        el.textContent = deleting ? word.slice(0, j--) : word.slice(0, j++);
+        if(!deleting && j>word.length+4){ deleting=true; }
+        if(deleting && j<=0){ deleting=false; i++; }
+        const speed = deleting ? 40 : 70;
+        setTimeout(tick, speed);
+      }
+      tick();
+    })();
+
+    // Tiny tilt/parallax effect for cards
+    document.querySelectorAll('[data-tilt]').forEach(card=>{
+      const damp = 18;
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width/2, cy = r.top + r.height/2;
+        const dx = (e.clientX - cx)/r.width, dy = (e.clientY - cy)/r.height;
+        card.style.transform = `perspective(800px) rotateX(${(-dy*damp).toFixed(2)}deg) rotateY(${(dx*damp).toFixed(2)}deg)`;
+      });
+      card.addEventListener('mouseleave', ()=> card.style.transform='none');
+    });
+
+    // Copy URL buttons
+    document.querySelectorAll('[data-copy]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText(btn.getAttribute('data-copy'));
+          btn.textContent = '✅ Copied!';
+          setTimeout(()=>btn.textContent='🔗 Copy URL', 1200);
+        }catch(e){ btn.textContent='⚠️ Copy failed'; }
+      });
+    });
+  </script>
+  <noscript>Enable JavaScript to see the animated header and tilt effects.</noscript>
+</body>
 </html>
